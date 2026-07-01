@@ -13,7 +13,7 @@
     </section>
 
     <!-- 1. The Story / Intro Section (with Industry Image) -->
-    <section class="py-24 bg-white relative">
+    <section class="py-24 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <!-- Left Side: Image -->
