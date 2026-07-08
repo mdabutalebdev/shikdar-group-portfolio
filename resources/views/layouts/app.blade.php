@@ -73,6 +73,7 @@
             padding-bottom: 0.5rem;
         }
     </style>
+    @stack('styles')
 </head>
 <body class="font-sans antialiased text-gray-800 bg-gray-50 flex flex-col min-h-screen overflow-x-hidden" x-data="{ mobileMenuOpen: false }">
     <!-- Navigation -->
@@ -193,10 +194,10 @@
     </main>
 
     <!-- Contact Section / Footer -->
-    <footer class="bg-darkgreen-900 pt-20 pb-10 border-t-2 border-gold-500 mt-auto">
+    <footer class="bg-darkgreen-900 pt-12 pb-6 border-t-2 border-gold-500 mt-auto">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-8">
                 
                 <!-- Brand Info -->
                 <div class="lg:col-span-4">
@@ -271,7 +272,8 @@
                                 <i class="fa-solid fa-phone"></i>
                             </div>
                             <div class="ml-4">
-                                <a href="tel:+8801711532644" class="text-sm text-gray-400 hover:text-gold-400 transition-colors">+88-01711-532644</a>
+                                <a href="tel:+8801705555888" class="text-sm text-gray-400 hover:text-gold-400 transition-colors">+8801705555888</a><br>
+                                <a href="tel:+8801777712770" class="text-sm text-gray-400 hover:text-gold-400 transition-colors">+8801777712770</a>
                             </div>
                         </li>
 
@@ -280,7 +282,7 @@
                                 <i class="fa-solid fa-globe"></i>
                             </div>
                             <div class="ml-4">
-                                <a href="http://www.sikdergroup.com" target="_blank" class="text-sm text-gray-400 hover:text-gold-400 transition-colors">www.sikdergroup.com</a>
+                                <a href="http://sikdergroupbd.com/" target="_blank" class="text-sm text-gray-400 hover:text-gold-400 transition-colors">sikdergroupbd.com</a>
                             </div>
                         </li>
                     </ul>
@@ -298,12 +300,12 @@
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-sm text-gray-500 text-center md:text-left">
                     &copy; <script>document.write(new Date().getFullYear())</script> SIKDER GROUP OF COMPANIES LTD. All rights reserved.
                 </p>
                 <div class="mt-4 md:mt-0">
-                    <span class="text-xs text-gray-600">Building Values, Creating Futures</span>
+                    <span class="text-xs text-gray-500">Created by <a href="https://www.extrainweb.com/" target="_blank" class="text-gold-500 hover:text-gold-400 font-semibold transition-colors">Extrain Web</a></span>
                 </div>
             </div>
         </div>
@@ -332,5 +334,6 @@
             }
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

@@ -10,7 +10,7 @@
         </div>
     </x-slot>
 
-    <div class="py-4">
+    <div class="py-4" x-data="{ deleteUrl: '' }">
         <div class="w-full">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -38,7 +38,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $concern->order_index }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="{{ route('admin.concerns.edit', $concern) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                    <form action="{{ route('admin.concerns.destroy', $concern) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?');">
+                                    <form action="{{ route('admin.concerns.destroy', $concern) }}" method="POST" class="inline-block" x-on:submit.prevent="deleteUrl = '{{ route('admin.concerns.destroy', $concern) }}'; $dispatch('open-modal', 'confirm-deletion')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
@@ -52,5 +52,34 @@
                 </div>
             </div>
         </div>
+
+        <x-modal name="confirm-deletion" focusable>
+            <form method="post" :action="deleteUrl" class="p-6">
+                @csrf
+                @method('delete')
+
+                <div class="text-center mb-6">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 sm:mx-auto sm:h-20 sm:w-20 mb-4">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl text-red-600"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        {{ __('Are you sure you want to delete this concern?') }}
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                        {{ __('Once this concern is deleted, all of its resources, text, and images will be permanently deleted. This action cannot be undone.') }}
+                    </p>
+                </div>
+
+                <div class="mt-6 flex justify-center gap-4">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+
+                    <x-danger-button>
+                        {{ __('Yes, Delete it') }}
+                    </x-danger-button>
+                </div>
+            </form>
+        </x-modal>
     </div>
 </x-app-layout>

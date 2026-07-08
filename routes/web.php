@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 // Frontend Routes
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/concerns', [FrontendController::class, 'concerns'])->name('concerns.public');
+Route::get('/concerns/{id}', [FrontendController::class, 'concern_details'])->name('concerns.details');
 
 Route::get('/about', function () {
     return view('about');
@@ -35,6 +36,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('services', ServiceController::class)->except('show');
     Route::resource('concerns', ConcernController::class)->except('show');
+    Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class)->except('show');
     
     // Admin Messages
     Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');

@@ -7,4 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Concern extends Model
 {
     protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'images' => 'array',
+        ];
+    }
 }
