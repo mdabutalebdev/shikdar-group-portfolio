@@ -1,40 +1,123 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden min-h-[90vh] flex items-center bg-darkgreen-900" style="background-image: url('{{ $setting->hero_bg_image ? asset($setting->hero_bg_image) : asset('images/hero_banner.png') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
-        <!-- Dark Overlay -->
-        <div class="absolute inset-0 bg-darkgreen-900/90"></div>
-        
-        <!-- Decorative Elements -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gold-500 via-transparent to-transparent"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
-            <div data-aos="fade-down" data-aos-delay="100" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/50 bg-black/30 backdrop-blur-md mb-8">
-                <i class="fa-solid fa-leaf text-gold-500 text-sm"></i>
-                <span class="text-gold-400 text-xs font-semibold tracking-widest uppercase">Excellence in every thread</span>
-                <i class="fa-solid fa-leaf text-gold-500 text-sm"></i>
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<style>
+    .hero-swiper {
+        width: 100%;
+        height: 85vh;
+        min-height: 65vh;
+    }
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .swiper-pagination-bullet {
+        background: #C5A059;
+        opacity: 0.5;
+    }
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+    }
+</style>
+@endpush
+
+    <!-- Hero Section Slider -->
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+            @forelse($banners as $banner)
+            <div class="swiper-slide">
+                @php
+                    $hasText = !empty($banner->title_1) || !empty($banner->title_2) || !empty($banner->subtitle) || !empty($banner->btn1_text) || !empty($banner->btn2_text);
+                @endphp
+                <section class="relative overflow-hidden w-full h-full flex items-center {{ $hasText ? 'bg-darkgreen-900' : 'bg-gray-100' }}" style="background-image: url('{{ $banner->image_path ? asset($banner->image_path) : asset('images/hero_banner.png') }}'); background-size: cover; background-position: center;">
+                    @if($hasText)
+                        <!-- Dark Overlay -->
+                        <div class="absolute inset-0 bg-darkgreen-900/80"></div>
+                        
+                        <!-- Decorative Elements -->
+                        <div class="absolute top-0 left-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gold-500 via-transparent to-transparent"></div>
+                        
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+                            @if(!empty($banner->title_1) || !empty($banner->title_2))
+                                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/50 bg-black/30 backdrop-blur-md mb-8 animate-fade-down">
+                                    <i class="fa-solid fa-leaf text-gold-500 text-sm"></i>
+                                    <span class="text-gold-400 text-xs font-semibold tracking-widest uppercase">Excellence in every thread</span>
+                                    <i class="fa-solid fa-leaf text-gold-500 text-sm"></i>
+                                </div>
+                                
+                                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg animate-zoom-in">
+                                    @if(!empty($banner->title_1))
+                                        <span class="block">{{ $banner->title_1 }}</span>
+                                    @endif
+                                    @if(!empty($banner->title_2))
+                                        <span class="block gold-gradient-text mt-2">{{ $banner->title_2 }}</span>
+                                    @endif
+                                </h1>
+                            @endif
+                            
+                            @if(!empty($banner->subtitle))
+                                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-200 tracking-wide font-light border-y border-gold-500/30 py-4 animate-fade-up">
+                                    {{ $banner->subtitle }}
+                                </p>
+                            @endif
+                            
+                            @if(!empty($banner->btn1_text) || !empty($banner->btn2_text))
+                                <div class="mt-8 md:mt-12 flex flex-col sm:flex-row justify-center gap-4 animate-fade-up" style="animation-delay: 200ms;">
+                                    @if(!empty($banner->btn1_text))
+                                    <a href="{{ url($banner->btn1_url ?? '#') }}" class="gold-gradient-bg text-darkgreen-900 font-bold px-6 py-3 md:px-8 md:py-4 text-sm md:text-base rounded-md shadow-lg hover:shadow-gold-500/30 transition-all hover:-translate-y-1">
+                                        {{ $banner->btn1_text }}
+                                    </a>
+                                    @endif
+                                    @if(!empty($banner->btn2_text))
+                                    <a href="{{ url($banner->btn2_url ?? '#') }}" class="bg-transparent border border-gold-500 text-gold-400 font-bold px-6 py-3 md:px-8 md:py-4 text-sm md:text-base rounded-md shadow-lg hover:bg-gold-500/10 transition-all hover:-translate-y-1 backdrop-blur-sm">
+                                        {{ $banner->btn2_text }}
+                                    </a>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </section>
             </div>
-            
-            <h1 data-aos="zoom-in" data-aos-delay="300" class="text-4xl md:text-6xl lg:text-7xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg">
-                <span class="block">{{ $setting->hero_title_1 ?? 'SIKDER GROUP OF' }}</span>
-                <span class="block gold-gradient-text mt-2">{{ $setting->hero_title_2 ?? 'COMPANIES LTD.' }}</span>
-            </h1>
-            
-            <p data-aos="fade-up" data-aos-delay="500" class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-200 tracking-wide font-light border-y border-gold-500/30 py-4">
-                {{ $setting->hero_subtitle ?? 'BUILDING VALUES, CREATING FUTURES' }}
-            </p>
-            
-            <div data-aos="fade-up" data-aos-delay="700" class="mt-8 md:mt-12 flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ url($setting->hero_btn1_url ?? '/concerns') }}" class="gold-gradient-bg text-darkgreen-900 font-bold px-6 py-3 md:px-8 md:py-4 text-sm md:text-base rounded-md shadow-lg hover:shadow-gold-500/30 transition-all hover:-translate-y-1">
-                    {{ $setting->hero_btn1_text ?? 'Explore Our Concerns' }}
-                </a>
-                <a href="{{ url($setting->hero_btn2_url ?? '/contact') }}" class="bg-transparent border border-gold-500 text-gold-400 font-bold px-6 py-3 md:px-8 md:py-4 text-sm md:text-base rounded-md shadow-lg hover:bg-gold-500/10 transition-all hover:-translate-y-1 backdrop-blur-sm">
-                    {{ $setting->hero_btn2_text ?? 'Contact Us' }}
-                </a>
+            @empty
+            <!-- Fallback Static Banner if no dynamic banners exist -->
+            <div class="swiper-slide">
+                <section class="relative overflow-hidden w-full h-full flex items-center bg-darkgreen-900" style="background-image: url('{{ $setting->hero_bg_image ? asset($setting->hero_bg_image) : asset('images/hero_banner.png') }}'); background-size: cover; background-position: center;">
+                    <!-- Dark Overlay -->
+                    <div class="absolute inset-0 bg-darkgreen-900/90"></div>
+                    <div class="absolute top-0 left-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gold-500 via-transparent to-transparent"></div>
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/50 bg-black/30 backdrop-blur-md mb-8">
+                            <i class="fa-solid fa-leaf text-gold-500 text-sm"></i>
+                            <span class="text-gold-400 text-xs font-semibold tracking-widest uppercase">Excellence in every thread</span>
+                            <i class="fa-solid fa-leaf text-gold-500 text-sm"></i>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg">
+                            <span class="block">{{ $setting->hero_title_1 ?? 'SIKDER GROUP OF' }}</span>
+                            <span class="block gold-gradient-text mt-2">{{ $setting->hero_title_2 ?? 'COMPANIES LTD.' }}</span>
+                        </h1>
+                        <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-200 tracking-wide font-light border-y border-gold-500/30 py-4">
+                            {{ $setting->hero_subtitle ?? 'BUILDING VALUES, CREATING FUTURES' }}
+                        </p>
+                        <div class="mt-8 md:mt-12 flex flex-col sm:flex-row justify-center gap-4">
+                            <a href="{{ url($setting->hero_btn1_url ?? '/concerns') }}" class="gold-gradient-bg text-darkgreen-900 font-bold px-6 py-3 md:px-8 md:py-4 text-sm md:text-base rounded-md shadow-lg hover:shadow-gold-500/30 transition-all hover:-translate-y-1">
+                                {{ $setting->hero_btn1_text ?? 'Explore Our Concerns' }}
+                            </a>
+                            <a href="{{ url($setting->hero_btn2_url ?? '/contact') }}" class="bg-transparent border border-gold-500 text-gold-400 font-bold px-6 py-3 md:px-8 md:py-4 text-sm md:text-base rounded-md shadow-lg hover:bg-gold-500/10 transition-all hover:-translate-y-1 backdrop-blur-sm">
+                                {{ $setting->hero_btn2_text ?? 'Contact Us' }}
+                            </a>
+                        </div>
+                    </div>
+                </section>
             </div>
+            @endforelse
         </div>
-    </section>
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
 
     <!-- Brief About Us Section -->
     <section class="py-24 bg-white relative overflow-hidden">
@@ -170,4 +253,28 @@
             </div>
         </div>
     </section>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.hero-swiper', {
+            loop: true,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            speed: 1000,
+        });
+    });
+</script>
+@endpush
 @endsection

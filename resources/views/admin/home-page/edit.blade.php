@@ -27,50 +27,60 @@
                         <input type="hidden" name="section" value="{{ $section }}">
 
                         @if($section === 'hero')
-                            <!-- Hero Section -->
-                            <div class="border-b border-gray-200 pb-6 mb-6">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100 mb-4">Hero Section Settings</h3>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <x-input-label for="hero_title_1" value="Title Line 1" />
-                                        <x-text-input id="hero_title_1" name="hero_title_1" type="text" class="mt-1 block w-full" :value="old('hero_title_1', $setting->hero_title_1)" />
-                                    </div>
-                                    <div>
-                                        <x-input-label for="hero_title_2" value="Title Line 2 (Gold)" />
-                                        <x-text-input id="hero_title_2" name="hero_title_2" type="text" class="mt-1 block w-full" :value="old('hero_title_2', $setting->hero_title_2)" />
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <x-input-label for="hero_subtitle" value="Subtitle" />
-                                        <x-text-input id="hero_subtitle" name="hero_subtitle" type="text" class="mt-1 block w-full" :value="old('hero_subtitle', $setting->hero_subtitle)" />
-                                    </div>
-                                    <div>
-                                        <x-input-label for="hero_btn1_text" value="Button 1 Text" />
-                                        <x-text-input id="hero_btn1_text" name="hero_btn1_text" type="text" class="mt-1 block w-full" :value="old('hero_btn1_text', $setting->hero_btn1_text)" />
-                                    </div>
-                                    <div>
-                                        <x-input-label for="hero_btn1_url" value="Button 1 URL" />
-                                        <x-text-input id="hero_btn1_url" name="hero_btn1_url" type="text" class="mt-1 block w-full" :value="old('hero_btn1_url', $setting->hero_btn1_url)" />
-                                    </div>
-                                    <div>
-                                        <x-input-label for="hero_btn2_text" value="Button 2 Text" />
-                                        <x-text-input id="hero_btn2_text" name="hero_btn2_text" type="text" class="mt-1 block w-full" :value="old('hero_btn2_text', $setting->hero_btn2_text)" />
-                                    </div>
-                                    <div>
-                                        <x-input-label for="hero_btn2_url" value="Button 2 URL" />
-                                        <x-text-input id="hero_btn2_url" name="hero_btn2_url" type="text" class="mt-1 block w-full" :value="old('hero_btn2_url', $setting->hero_btn2_url)" />
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <x-input-label for="hero_bg_image_file" value="Hero Background Image" />
-                                        <input type="file" id="hero_bg_image_file" name="hero_bg_image_file" class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                                        @if($setting->hero_bg_image)
-                                            <div class="mt-2">
-                                                <img src="{{ asset($setting->hero_bg_image) }}" alt="Hero Background" class="h-20 object-cover rounded">
-                                            </div>
-                                        @endif
-                                    </div>
+                            <!-- Hero Section (Banners CRUD) -->
+                            <div class="mb-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Manage Banners</h3>
+                                    <a href="{{ route('admin.banners.create') }}" style="background-color: #4f46e5; color: #ffffff;" class="px-4 py-2 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest hover:opacity-90 transition">Create Banner</a>
+                                </div>
+
+                                <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden">
+                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                        <thead class="bg-gray-50 dark:bg-gray-700">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Image</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Title</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Order</th>
+                                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                            @forelse(isset($banners) ? $banners : [] as $banner)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <img src="{{ $banner->image_path ? asset($banner->image_path) : asset('images/hero_banner.png') }}" class="h-12 w-20 object-cover rounded shadow-sm">
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 font-medium">
+                                                        {{ $banner->title_1 ?? 'No Title' }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                                        {{ $banner->order }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a href="{{ route('admin.banners.edit', $banner->id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3">Edit</a>
+                                                        <button type="button" onclick="if(confirm('Are you sure you want to delete this banner?')) { document.getElementById('delete-banner-{{ $banner->id }}').submit(); }" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="4" class="px-6 py-8 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center">
+                                                        No active banners found.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+
+                            @if(isset($banners) && count($banners) > 0)
+                                @foreach($banners as $banner)
+                                    <form id="delete-banner-{{ $banner->id }}" action="{{ route('admin.banners.destroy', $banner->id) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                @endforeach
+                            @endif
                         @elseif($section === 'about')
 
                         <!-- About Section -->
@@ -216,11 +226,13 @@
                         </div>
                         @endif
 
-                        <div class="flex items-center justify-end mt-4">
-                            <x-primary-button class="ms-4">
-                                {{ __('Save Changes') }}
-                            </x-primary-button>
-                        </div>
+                        @if($section !== 'hero')
+                            <div class="flex items-center justify-end mt-4">
+                                <x-primary-button class="ms-4">
+                                    {{ __('Save Changes') }}
+                                </x-primary-button>
+                            </div>
+                        @endif
                     </form>
 
                 </div>

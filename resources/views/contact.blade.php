@@ -104,7 +104,8 @@
                                     </div>
                                     <div class="ml-4">
                                         <span class="block text-lg font-semibold text-white mb-1">Phone</span>
-                                        <a href="tel:+8801711532644" class="text-gray-300 hover:text-gold-400 transition-colors">+88-01711-532644</a>
+                                        <a href="tel:+8801705555888" class="text-gray-300 hover:text-gold-400 transition-colors">+8801705555888</a><br>
+                                        <a href="tel:+8801777712770" class="text-gray-300 hover:text-gold-400 transition-colors">+8801777712770</a>
                                     </div>
                                 </li>
 
@@ -114,7 +115,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <span class="block text-lg font-semibold text-white mb-1">Website</span>
-                                        <a href="http://www.sikdergroup.com" target="_blank" class="text-gray-300 hover:text-gold-400 transition-colors">www.sikdergroup.com</a>
+                                        <a href="http://sikdergroupbd.com/" target="_blank" class="text-gray-300 hover:text-gold-400 transition-colors">sikdergroupbd.com</a>
                                     </div>
                                 </li>
                             </ul>
