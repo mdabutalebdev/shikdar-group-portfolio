@@ -18,13 +18,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($concerns as $index => $concern)
                     <!-- Card -->
-                    <div class="glass-card rounded-xl p-8 transition-all-custom flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
+                    <a href="{{ route('concerns.details', $concern->id) }}" class="glass-card rounded-xl p-8 transition-all-custom flex flex-col items-center text-center group cursor-pointer hover:shadow-xl" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
                         <div class="w-16 h-16 rounded-full bg-darkgreen-800/5 group-hover:bg-gold-500/10 flex items-center justify-center mb-6 transition-colors">
                             <i class="fa-solid {{ $concern->icon_class ?? 'fa-circle' }} text-2xl text-darkgreen-800 group-hover:text-gold-600 transition-colors"></i>
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-darkgreen-800 transition-colors">{{ $concern->title }}</h3>
                         <p class="text-gray-500 text-sm mt-auto">{{ $concern->description }}</p>
-                    </div>
+                    </a>
                 @empty
                     <!-- Card 1 -->
                     <div class="glass-card rounded-xl p-8 transition-all-custom flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="100">

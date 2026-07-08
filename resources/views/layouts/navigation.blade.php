@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('admin.services.index')" :active="request()->routeIs('admin.services.*')">
                         Capabilities
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.banners.index')" :active="request()->routeIs('admin.banners.*')">
+                        Banners
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.concerns.index')" :active="request()->routeIs('admin.concerns.*')">
                         Concerns
                     </x-nav-link>
@@ -87,6 +90,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.services.index')" :active="request()->routeIs('admin.services.*')">
                 Capabilities
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.banners.index')" :active="request()->routeIs('admin.banners.*')">
+                Banners
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.concerns.index')" :active="request()->routeIs('admin.concerns.*')">
                 Concerns
