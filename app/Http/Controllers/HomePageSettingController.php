@@ -13,7 +13,8 @@ class HomePageSettingController extends Controller
         if (!$setting) {
             $setting = HomePageSetting::create([]);
         }
-        return view('admin.home-page.edit', compact('setting'));
+        $banners = \App\Models\Banner::where('is_active', true)->orderBy('order')->get();
+        return view('admin.home-page.edit', compact('setting', 'banners'));
     }
 
     public function update(Request $request)
